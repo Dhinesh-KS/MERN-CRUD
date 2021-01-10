@@ -11,4 +11,15 @@ router.get("/posts", async (req, res) => {
   }
 });
 
+router.post("/createpost", async (req, res) => {
+  const newPost = new PostMessage(req.body);
+
+  try {
+    await newPost.save();
+    res.status(201).send(newPost);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
 module.exports = router;

@@ -5,9 +5,7 @@ const PostMessage = mongoose.model("PostMessage", {
     type: String,
   },
   message: {
-    message: {
-      type: String,
-    },
+    type: String,
   },
 });
 
