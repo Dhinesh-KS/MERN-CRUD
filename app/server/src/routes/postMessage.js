@@ -46,4 +46,18 @@ router.put("/posts/:id", async (req, res) => {
   }
 });
 
+router.delete("/posts/:id", async (req, res) => {
+  try {
+    const post = await PostMessage.findByIdAndDelete(req.params.id);
+
+    if (!post) {
+      res.status(404).send();
+    }
+
+    res.send(post);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 module.exports = router;
