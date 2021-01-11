@@ -1,4 +1,4 @@
-import Client from "./AxiosClient";
+import Client from "./Client";
 
 export const httpClient = {
   getPosts: () => {

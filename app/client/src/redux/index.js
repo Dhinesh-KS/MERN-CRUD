@@ -1,1 +1,1 @@
-export {} from "./PostMessage/Actions";
+export { fetchPosts } from "./PostMessage/Actions";

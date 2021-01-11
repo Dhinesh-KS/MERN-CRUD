@@ -1,4 +1,4 @@
-import { FETCH_POST } from "./ActionTypes";
+import { FETCH_POST_SUCCESS, FETCH_POST_FAILURE } from "./ActionTypes";
 
 const initialState = {
   posts: [],
@@ -6,10 +6,15 @@ const initialState = {
 
 export const PostMessage = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_POST:
+    case FETCH_POST_SUCCESS:
       return {
         ...state,
         posts: action.payload,
+      };
+
+    case FETCH_POST_FAILURE:
+      return {
+        ...initialState,
       };
 
     default:
