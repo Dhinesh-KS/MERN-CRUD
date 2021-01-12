@@ -60,4 +60,9 @@ router.delete("/posts/:id", async (req, res) => {
   }
 });
 
+router.get("/", (req, res) => {
+  res.send("Welcome to Post-Box MERN-CRUD")
+});
+
+
 module.exports = router;

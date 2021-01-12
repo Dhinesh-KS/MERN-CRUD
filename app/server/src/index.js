@@ -1,14 +1,15 @@
 require("./db/mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require('cors');
+const cors = require("cors");
+const path = require("path");
 const postMessageRoute = require("./routes/postMessage");
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors({ origin : "http://192.168.43.88:3000"}))
+app.use(cors());
 app.use(postMessageRoute);
 
 app.listen(port, () => {
