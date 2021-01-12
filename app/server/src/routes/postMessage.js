@@ -24,7 +24,7 @@ router.post("/createpost", async (req, res) => {
 
 router.put("/posts/:id", async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["message"];
+  const allowedUpdates = ["title", "message"];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {

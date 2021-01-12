@@ -1,25 +1,62 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import { connect } from "react-redux";
-import { fetchPosts } from "../redux/index";
-import { Grid, List, ListItemText, Paper, Typography, withStyles } from "@material-ui/core";
+import { fetchPosts, deletePost } from "../redux/index";
+import {
+  Grid,
+  List,
+  ListItemText,
+  Paper,
+  Typography,
+  withStyles,
+  ListItem,
+  Divider,
+  Button,
+} from "@material-ui/core";
 import PostMessageForm from "./PostMessageForm";
+import ButterToast, { Cinnamon } from "butter-toast";
+import { DeleteSweep } from "@material-ui/icons";
 
 const styles = (theme) => ({
   paper: {
     margin: theme.spacing(3),
     padding: theme.spacing(2),
   },
+  smMargin: {
+    margin: theme.spacing(1),
+  },
+  actionDiv: {
+    textAlign: "center",
+  },
 });
 
 const PostMessages = ({ classes, ...props }) => {
+  const [currentId, setCurrentId] = useState(0);
+
   useEffect(() => {
     props.initGetPosts();
   }, []);
+
+  const onDelete = (id) => {
+    const onSuccess = () => {
+      ButterToast.raise({
+        content: (
+          <Cinnamon.Crisp
+            title="Post Box"
+            content="Deleted successfully"
+            scheme={Cinnamon.Crisp.SCHEME_PURPLE}
+            icon={<DeleteSweep />}
+          />
+        ),
+      });
+    };
+    if (window.confirm("Are you sure to delete this record?")) props.deletePost(id, onSuccess);
+  };
+
   return (
     <Grid container>
       <Grid item xs={5}>
         <Paper className={classes.paper}>
-          <PostMessageForm />
+          <PostMessageForm {...{ currentId, setCurrentId }} />
         </Paper>
       </Grid>
       <Grid item xs={7}>
@@ -31,13 +68,33 @@ const PostMessages = ({ classes, ...props }) => {
               </Typography>
             )}
             {props.data &&
-              props.data.length > 0 &&
               props.data.map((item, index) => {
                 return (
                   <Fragment key={index}>
                     <ListItem>
                       <ListItemText>
-                        <Typography variant="h5" >{item.title}</Typography>
+                        <Typography variant="h5">{item.title}</Typography>
+                        <div>{item.message}</div>
+                        <div className={classes.actionDiv}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            className={classes.smMargin}
+                            onClick={() => setCurrentId(item._id)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                            className={classes.smMargin}
+                            onClick={() => onDelete(item._id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
                       </ListItemText>
                     </ListItem>
                     <Divider component="li" />
@@ -60,6 +117,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     initGetPosts: () => dispatch(fetchPosts()),
+    deletePost: (id, onSuccess) => dispatch(deletePost(id, onSuccess)),
   };
 };
 
