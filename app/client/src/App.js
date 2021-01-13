@@ -12,7 +12,7 @@ function App() {
         <Container maxWidth="lg">
           <AppBar position="static" color="primary">
             <Typography variant="h3" align="center">
-              MERN-CRUD
+              Post-Box
             </Typography>
           </AppBar>
           <PostMessage />

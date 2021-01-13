@@ -54,12 +54,12 @@ const PostMessages = ({ classes, ...props }) => {
 
   return (
     <Grid container>
-      <Grid item xs={5}>
+      <Grid item xs={12} md={5}>
         <Paper className={classes.paper}>
           <PostMessageForm {...{ currentId, setCurrentId }} />
         </Paper>
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={12} md={7}>
         <Paper className={classes.paper}>
           <List>
             {props.data && props.data.length === 0 && (
